@@ -1,4 +1,6 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { SiteNav } from "@/components/SiteNav";
+import { SiteFooter } from "@/components/SiteFooter";
 
 import appCss from "../styles.css?url";
 
@@ -29,11 +31,11 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Ishita Singh — 3D / 2D Game Artist Portfolio" },
+      { name: "description", content: "Portfolio of Ishita Singh, freelance 3D/2D game artist specializing in modeling, texturing, sculpting, and stylized 2D animation." },
+      { name: "author", content: "Ishita Singh" },
+      { property: "og:title", content: "Ishita Singh — 3D / 2D Game Artist Portfolio" },
+      { property: "og:description", content: "3D modeling, texturing, sculpting, PBR workflows, and stylized 2D animation." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
@@ -65,5 +67,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
-  return <Outlet />;
+  return (
+    <div className="min-h-screen flex flex-col">
+      <SiteNav />
+      <main className="flex-1">
+        <Outlet />
+      </main>
+      <SiteFooter />
+    </div>
+  );
 }
