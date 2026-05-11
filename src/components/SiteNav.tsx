@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const links = [
   { to: "/", label: "Home" },
@@ -32,13 +33,19 @@ export function SiteNav() {
             </li>
           ))}
         </ul>
+        <div className="hidden md:flex items-center">
+          <ThemeToggle />
+        </div>
+        <div className="flex items-center md:hidden">
+          <ThemeToggle />
         <button
           aria-label="Toggle menu"
-          className="md:hidden p-2 -mr-2 text-foreground"
+          className="p-2 -mr-2 text-foreground"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
+        </div>
       </nav>
       {open && (
         <div className="md:hidden border-t border-border bg-background">

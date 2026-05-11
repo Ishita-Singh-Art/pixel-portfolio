@@ -25,11 +25,15 @@ function Home() {
           <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4">
             {profile.location} · Freelance & Collaborations
           </p>
+          <p className="text-sm sm:text-base font-medium text-muted-foreground mb-3">
+            Hi, I'm
+          </p>
           <h1 className="text-5xl sm:text-7xl font-bold tracking-tight max-w-3xl leading-[1.05]">
-            <span className="text-gradient">{profile.title}</span>
-            <br />
-            crafted with care.
+            <span className="text-gradient">{profile.name}</span>
           </h1>
+          <p className="mt-4 text-2xl sm:text-3xl font-display font-semibold text-foreground/90">
+            {profile.title} <span className="text-primary">·</span> crafted with care.
+          </p>
           <p className="mt-6 max-w-xl text-base sm:text-lg text-muted-foreground">
             {profile.tagline}
           </p>
