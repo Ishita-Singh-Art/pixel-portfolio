@@ -35,7 +35,7 @@ export const experiences = [
     role: "3D / 2D Faculty",
     company: "Arena Animation",
     period: "April 2024 – March 2025",
-    location: "Raipur, India",
+    location: "Bhilai ,Chhattisgarh , India",
     points: [
       "Delivered 100+ sessions on 3D modeling, texturing, and animation.",
       "Trained students in Maya, 3ds Max, ZBrush, and Substance Painter.",
