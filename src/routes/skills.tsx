@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/PageHeader";
+import { SkillIcon } from "@/components/SkillIcon";
 import { skillGroups } from "@/data/portfolio";
 
 export const Route = createFileRoute("/skills")({
@@ -28,8 +29,9 @@ function Skills() {
               {g.items.map((item) => (
                 <span
                   key={item}
-                  className="rounded-md border border-border bg-background/60 px-3 py-1.5 text-sm text-foreground"
+                  className="inline-flex items-center gap-2 rounded-md border border-border bg-background/60 px-3 py-1.5 text-sm text-foreground"
                 >
+                  <SkillIcon name={item} className="h-4 w-4" />
                   {item}
                 </span>
               ))}
