@@ -23,7 +23,7 @@ export const experiences = [
     role: "3D / 2D Artist (Freelance)",
     company: "Freelance",
     period: "March 2025 – Present",
-    location: "Raipur, India",
+    location: "Raipur, Chhattisgarh , India",
     points: [
       "Created a high-quality 3D chair model that increased client engagement by 30%.",
       "Designed and animated a 2D cat character for a game using Spine.",
@@ -35,7 +35,7 @@ export const experiences = [
     role: "3D / 2D Faculty",
     company: "Arena Animation",
     period: "April 2024 – March 2025",
-    location: "Bhilai ,Chhattisgarh , India",
+    location: "Raipur, Chhattisgarh , India",
     points: [
       "Delivered 100+ sessions on 3D modeling, texturing, and animation.",
       "Trained students in Maya, 3ds Max, ZBrush, and Substance Painter.",
@@ -47,7 +47,7 @@ export const experiences = [
     role: "3D Faculty",
     company: "Shubhkamna Institute",
     period: "May 2023 – March 2024",
-    location: "Raipur, India",
+    location: "Raipur, Chhattisgarh , India",
     points: [
       "Delivered 50+ sessions in 3D modeling, lighting, and texturing using Maya.",
       "Conducted 60+ sessions in digital sculpting using ZBrush.",
