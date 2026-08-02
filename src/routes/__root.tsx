@@ -32,10 +32,17 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Ishita Singh — 3D / 2D Game Artist Portfolio" },
-      { name: "description", content: "Portfolio of Ishita Singh, freelance 3D/2D game artist specializing in modeling, texturing, sculpting, and stylized 2D animation." },
+      {
+        name: "description",
+        content:
+          "Portfolio of Ishita Singh, freelance 3D/2D game artist specializing in modeling, texturing, sculpting, and stylized 2D animation.",
+      },
       { name: "author", content: "Ishita Singh" },
       { property: "og:title", content: "Ishita Singh — 3D / 2D Game Artist Portfolio" },
-      { property: "og:description", content: "3D modeling, texturing, sculpting, PBR workflows, and stylized 2D animation." },
+      {
+        property: "og:description",
+        content: "3D modeling, texturing, sculpting, PBR workflows, and stylized 2D animation.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },

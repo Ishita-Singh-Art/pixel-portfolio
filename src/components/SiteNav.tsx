@@ -38,13 +38,13 @@ export function SiteNav() {
         </div>
         <div className="flex items-center md:hidden">
           <ThemeToggle />
-        <button
-          aria-label="Toggle menu"
-          className="p-2 -mr-2 text-foreground"
-          onClick={() => setOpen((v) => !v)}
-        >
-          {open ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
+          <button
+            aria-label="Toggle menu"
+            className="p-2 -mr-2 text-foreground"
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
         </div>
       </nav>
       {open && (
@@ -56,7 +56,9 @@ export function SiteNav() {
                   to={l.to}
                   onClick={() => setOpen(false)}
                   className="block px-3 py-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted"
-                  activeProps={{ className: "block px-3 py-2 rounded-md text-primary font-medium bg-muted" }}
+                  activeProps={{
+                    className: "block px-3 py-2 rounded-md text-primary font-medium bg-muted",
+                  }}
                   activeOptions={{ exact: l.to === "/" }}
                 >
                   {l.label}

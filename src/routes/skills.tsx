@@ -7,7 +7,10 @@ export const Route = createFileRoute("/skills")({
   head: () => ({
     meta: [
       { title: "Skills — Ishita Singh" },
-      { name: "description", content: "Tools and specializations of Ishita Singh, 3D/2D game artist." },
+      {
+        name: "description",
+        content: "Tools and specializations of Ishita Singh, 3D/2D game artist.",
+      },
     ],
   }),
   component: Skills,

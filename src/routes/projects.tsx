@@ -8,7 +8,11 @@ export const Route = createFileRoute("/projects")({
   head: () => ({
     meta: [
       { title: "Projects — Ishita Singh" },
-      { name: "description", content: "Selected 3D and 2D game art projects with process notes, challenges, and solutions." },
+      {
+        name: "description",
+        content:
+          "Selected 3D and 2D game art projects with process notes, challenges, and solutions.",
+      },
     ],
   }),
   component: ProjectsPage,
@@ -69,7 +73,7 @@ function ProjectCard({ project }: { project: Project }) {
               <img
                 src={current.src}
                 alt={current.alt ?? project.title}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
                 loading="lazy"
               />
             ) : (
@@ -121,9 +125,7 @@ function ProjectCard({ project }: { project: Project }) {
             <span className="rounded-full bg-secondary/20 text-secondary px-2.5 py-0.5 text-xs font-medium">
               {project.category}
             </span>
-            <span className="text-xs text-muted-foreground">
-              {project.tools.join(" · ")}
-            </span>
+            <span className="text-xs text-muted-foreground">{project.tools.join(" · ")}</span>
           </div>
           <h2 className="text-2xl font-bold tracking-tight">{project.title}</h2>
           <p className="mt-3 text-sm text-muted-foreground leading-relaxed">

@@ -6,7 +6,10 @@ export const Route = createFileRoute("/experience")({
   head: () => ({
     meta: [
       { title: "Experience — Ishita Singh" },
-      { name: "description", content: "Work experience and education of Ishita Singh, 3D/2D game artist." },
+      {
+        name: "description",
+        content: "Work experience and education of Ishita Singh, 3D/2D game artist.",
+      },
     ],
   }),
   component: Experience,
@@ -29,9 +32,13 @@ function Experience() {
               <h3 className="text-xl font-semibold">{e.role}</h3>
               <span className="text-xs text-muted-foreground">{e.period}</span>
             </div>
-            <p className="text-sm text-primary mt-1">{e.company} · {e.location}</p>
+            <p className="text-sm text-primary mt-1">
+              {e.company} · {e.location}
+            </p>
             <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground list-disc list-outside ml-4">
-              {e.points.map((pt) => <li key={pt}>{pt}</li>)}
+              {e.points.map((pt) => (
+                <li key={pt}>{pt}</li>
+              ))}
             </ul>
           </li>
         ))}

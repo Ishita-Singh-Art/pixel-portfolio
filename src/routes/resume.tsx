@@ -7,7 +7,10 @@ export const Route = createFileRoute("/resume")({
   head: () => ({
     meta: [
       { title: "Resume & Contact — Ishita Singh" },
-      { name: "description", content: "Download Ishita Singh's resume and get in touch for freelance 3D/2D art work." },
+      {
+        name: "description",
+        content: "Download Ishita Singh's resume and get in touch for freelance 3D/2D art work.",
+      },
     ],
   }),
   component: Resume,
@@ -47,13 +50,23 @@ function Resume() {
             </li>
             <li className="flex items-center gap-3">
               <Linkedin className="size-4 text-muted-foreground" />
-              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="hover:text-primary">
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-primary"
+              >
                 LinkedIn
               </a>
             </li>
             <li className="flex items-center gap-3">
               <FolderOpen className="size-4 text-muted-foreground" />
-              <a href={profile.drivePortfolio} target="_blank" rel="noreferrer" className="hover:text-primary">
+              <a
+                href={profile.drivePortfolio}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-primary"
+              >
                 Drive Portfolio
               </a>
             </li>

@@ -102,12 +102,22 @@ export const skillGroups = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PROJECTS
-// To add a project: copy a block, update fields. `media` items can be:
-//   { type: "image", src: "https://drive.google.com/uc?export=view&id=FILE_ID" }
-//   { type: "video", src: "https://drive.google.com/file/d/FILE_ID/preview" }
-// For a Drive image, use the "uc?export=view&id=FILE_ID" form.
-// For a Drive video, use the "/preview" form (it embeds in an iframe).
+// PROJECTS — MEDIA FORMATS
+//
+//   IMAGE (Google Drive — use THUMBNAIL endpoint, NOT uc?export=view):
+//     { type: "image", src: "https://drive.google.com/thumbnail?id=FILE_ID&sz=w1920", alt: "Description" }
+//     Get FILE_ID from the shareable link:
+//       https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+//     The thumbnail endpoint supports CORS — uc?export=view does NOT.
+//     sz=w1920 gives full-HD width; use sz=w1280 or sz=w640 for smaller.
+//
+//   IMAGE (local — place file in /public/ folder):
+//     { type: "image", src: "/my-artwork.jpg", alt: "Description" }
+//
+//   VIDEO (Google Drive — embeds in an iframe):
+//     { type: "video", src: "https://drive.google.com/file/d/FILE_ID/preview", title: "Title" }
+//
+//   TIP: Add multiple image entries to create a browsable carousel.
 // ─────────────────────────────────────────────────────────────────────────────
 
 export type ProjectMedia =
@@ -185,8 +195,8 @@ export const projects: Project[] = [
     media: [
       {
         type: "video",
-        src: "https://drive.google.com/embeddedfolderview?id=1CZHhhwy23IHmlCe2H8BrzZZt6196p39B#grid",
-        title: "2D Portfolio — Drive Folder",
+        src: "https://drive.google.com/file/d/1PuQiWPat0MSPlYDaN6i7IFV-I7aHYdh4/preview",
+        title: "2D Cat Character — Spine Animation",
       },
     ],
   },
@@ -205,9 +215,24 @@ export const projects: Project[] = [
       "https://drive.google.com/drive/folders/1CZHhhwy23IHmlCe2H8BrzZZt6196p39B?usp=sharing",
     media: [
       {
-        type: "video",
-        src: "https://drive.google.com/embeddedfolderview?id=1CZHhhwy23IHmlCe2H8BrzZZt6196p39B#grid",
-        title: "2D Portfolio — Drive Folder",
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=1pKCjlEmQwby6cm7giukn2qwSQBlBPwCF&sz=w1920",
+        alt: "2D Illustration — Artwork 1",
+      },
+      {
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=1KcBbH0FMtiXh0GSaoCIfmiFFVg0SOcjC&sz=w1920",
+        alt: "2D Illustration — Artwork 2",
+      },
+      {
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=1xKT8PlzpqBPTm-zh5fs2hkJ__3GwOUmd&sz=w1920",
+        alt: "Canvas Painting — Artwork 3",
+      },
+      {
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=1dRZOnup3O5LHB5b_G-bt-JIN3jQ8iF_x&sz=w1920",
+        alt: "Canvas Painting — Artwork 4",
       },
     ],
   },

@@ -25,9 +25,7 @@ function Home() {
           <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4">
             {profile.location} · Freelance & Collaborations
           </p>
-          <p className="text-sm sm:text-base font-medium text-muted-foreground mb-3">
-            Hi, I'm
-          </p>
+          <p className="text-sm sm:text-base font-medium text-muted-foreground mb-3">Hi, I'm</p>
           <h1 className="text-5xl sm:text-7xl font-bold tracking-tight max-w-3xl leading-[1.05]">
             <span className="text-gradient">{profile.name}</span>
           </h1>
@@ -70,7 +68,10 @@ function Home() {
       <section className="mx-auto max-w-6xl px-5 sm:px-8 pb-20">
         <div className="flex items-end justify-between mb-8">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">Featured Work</h2>
-          <Link to="/projects" className="text-sm text-primary hover:underline inline-flex items-center gap-1">
+          <Link
+            to="/projects"
+            className="text-sm text-primary hover:underline inline-flex items-center gap-1"
+          >
             See all <ArrowRight className="size-4" />
           </Link>
         </div>
@@ -82,7 +83,9 @@ function Home() {
               className="group rounded-xl border border-border bg-card p-6 hover:border-primary/60 transition shadow-card"
             >
               <p className="text-xs uppercase tracking-widest text-secondary">{p.category}</p>
-              <h3 className="mt-2 text-lg font-semibold group-hover:text-primary transition">{p.title}</h3>
+              <h3 className="mt-2 text-lg font-semibold group-hover:text-primary transition">
+                {p.title}
+              </h3>
               <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{p.description}</p>
             </Link>
           ))}
@@ -96,7 +99,8 @@ function Home() {
             Have a project in mind?
           </h2>
           <p className="mt-2 text-primary-foreground/80">
-            I'm available for freelance 3D & 2D work — characters, props, environments, and animation.
+            I'm available for freelance 3D & 2D work — characters, props, environments, and
+            animation.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a
