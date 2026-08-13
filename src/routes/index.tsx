@@ -79,7 +79,8 @@ function Home() {
           {featured.map((p) => (
             <Link
               key={p.slug}
-              to="/projects"
+              to="/projects/$slug"
+              params={{ slug: p.slug }}
               className="group rounded-xl border border-border bg-card p-6 hover:border-primary/60 transition shadow-card"
             >
               <p className="text-xs uppercase tracking-widest text-secondary">{p.category}</p>

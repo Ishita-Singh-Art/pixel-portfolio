@@ -138,6 +138,27 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "old-school-signal-stylized-radio",
+    title: "Old School Signal — Stylized Radio",
+    category: "3D",
+    tools: ["Autodesk Maya", "Substance Painter", "Marmoset Toolbag"],
+    description:
+      "A stylized 3D radio prop inspired by classic analog designs, created to capture the charm of retro sound technology in a clean modern art style. This piece focuses on bold shapes, simple forms, and a warm color palette, blending vintage aesthetics with a minimalistic approach. From the mesh grille and chunky knobs to the compact case and handle, every element is built with clean topology suitable for games or animated scenes. The model emphasizes readability, silhouette clarity, and a polished presentation while keeping the overall design lightweight and stylized. Created as a practice piece for hard-surface modeling, stylized shading, and prop design workflows.",
+    challenges:
+      "Achieving a stylized look that reads as 'retro' without relying on realistic wear-and-tear — keeping the shapes bold and the materials clean while still evoking the warmth and charm of vintage audio gear.",
+    solution:
+      "Blocked out the primary forms first to nail the silhouette, then refined each component (grille, knobs, handle, case) with beveled edges and exaggerated proportions for readability. Used Substance Painter's stylized shading workflow with flat base colors, subtle curvature-driven gradients, and a hand-painted roughness map to give the metal and plastic surfaces a warm, tactile feel without photorealistic noise. Final presentation rendered in Marmoset Toolbag with a soft three-point lighting setup to highlight the model's form and material separation.",
+    driveFolder:
+      "https://drive.google.com/drive/folders/19OaYxkxotZhsF2HcSafY2YIOZq89qwcd?usp=sharing",
+    media: [
+      {
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=1PpbuXY_iyE7RnJgsi1bwhLVCd5oMPZ3v&sz=w1920",
+        alt: "3D Portfolio — Drive Folder",
+      },
+    ],
+  },
+  {
     slug: "3d-chair-product-viz",
     title: "High-Quality 3D Chair — Product Visualization",
     category: "3D",
