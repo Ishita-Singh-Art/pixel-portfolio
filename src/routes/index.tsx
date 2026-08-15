@@ -8,7 +8,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const featured = projects.slice(0, 3);
+  const featured = projects.filter((p) => p.featured);
   return (
     <div>
       {/* Hero */}
@@ -76,20 +76,56 @@ function Home() {
           </Link>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
-          {featured.map((p) => (
-            <Link
-              key={p.slug}
-              to="/projects/$slug"
-              params={{ slug: p.slug }}
-              className="group rounded-xl border border-border bg-card p-6 hover:border-primary/60 transition shadow-card"
-            >
-              <p className="text-xs uppercase tracking-widest text-secondary">{p.category}</p>
-              <h3 className="mt-2 text-lg font-semibold group-hover:text-primary transition">
-                {p.title}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{p.description}</p>
-            </Link>
-          ))}
+          {featured.map((p) => {
+            const thumb =
+              p.media.find((m) => m.type === "image") ??
+              p.media.find(
+                (m) =>
+                  m.type === "video" &&
+                  !m.src.includes("embeddedfolderview") &&
+                  !m.src.includes("accounts.google.com"),
+              );
+            return (
+              <Link
+                key={p.slug}
+                to="/projects/$slug"
+                params={{ slug: p.slug }}
+                className="group rounded-xl border border-border bg-card overflow-hidden hover:border-primary/60 transition shadow-card"
+              >
+                {thumb && (
+                  <div
+                    className={`relative overflow-hidden bg-muted ${
+                      thumb.type === "image" ? "aspect-video" : "aspect-[4/3]"
+                    }`}
+                  >
+                    {thumb.type === "image" ? (
+                      <img
+                        src={thumb.src}
+                        alt={thumb.alt ?? p.title}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <iframe
+                        src={thumb.src}
+                        title={thumb.title ?? p.title}
+                        className="absolute inset-0 h-full w-full border-0"
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                      />
+                    )}
+                  </div>
+                )}
+                <div className="p-6">
+                  <p className="text-xs uppercase tracking-widest text-secondary">{p.category}</p>
+                  <h3 className="mt-2 text-lg font-semibold group-hover:text-primary transition">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{p.description}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

@@ -134,6 +134,8 @@ export type Project = {
   solution: string;
   driveFolder?: string;
   media: ProjectMedia[];
+  /** Set true to show this project in the "Featured Work" section on the landing page. */
+  featured?: boolean;
 };
 
 export const projects: Project[] = [
@@ -141,6 +143,7 @@ export const projects: Project[] = [
     slug: "old-school-signal-stylized-radio",
     title: "Old School Signal — Stylized Radio",
     category: "3D",
+    featured: true,
     tools: ["Autodesk Maya", "Substance Painter", "Marmoset Toolbag"],
     description:
       "A stylized 3D radio prop inspired by classic analog designs, created to capture the charm of retro sound technology in a clean modern art style. This piece focuses on bold shapes, simple forms, and a warm color palette, blending vintage aesthetics with a minimalistic approach. From the mesh grille and chunky knobs to the compact case and handle, every element is built with clean topology suitable for games or animated scenes. The model emphasizes readability, silhouette clarity, and a polished presentation while keeping the overall design lightweight and stylized. Created as a practice piece for hard-surface modeling, stylized shading, and prop design workflows.",
@@ -162,6 +165,7 @@ export const projects: Project[] = [
     slug: "3d-chair-product-viz",
     title: "High-Quality 3D Chair — Product Visualization",
     category: "3D",
+    featured: true,
     tools: ["Autodesk Maya", "Substance Painter", "Arnold"],
     description:
       "A photorealistic 3D chair model created for a client's product visualization, focused on clean topology, accurate materials, and studio lighting.",
@@ -183,6 +187,7 @@ export const projects: Project[] = [
     slug: "low-poly-tank-mobile",
     title: "Low-Poly Tank — Mobile Game Asset",
     category: "3D",
+    featured: true,
     tools: ["Blender", "Substance Painter", "Unity"],
     description:
       "Stylized low-poly tank asset designed for a mobile game, optimized for real-time rendering on lower-end devices.",
@@ -204,6 +209,7 @@ export const projects: Project[] = [
     slug: "2d-cat-spine-animation",
     title: "2D Cat Character — Spine Animation",
     category: "2D",
+    featured: true,
     tools: ["Photoshop", "Spine"],
     description:
       "A playful 2D cat character designed and rigged for a game, featuring idle, walk, and reaction animations using Spine's skeletal system.",
@@ -225,6 +231,7 @@ export const projects: Project[] = [
     slug: "2d-illustrations-canvas",
     title: "2D Illustrations & Canvas Paintings",
     category: "2D",
+    featured: true,
     tools: ["Procreate", "Clip Studio", "Traditional"],
     description:
       "A collection of 2D illustrations and original canvas paintings sold to clients — exploring color, mood, and storytelling.",

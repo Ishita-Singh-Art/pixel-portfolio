@@ -56,9 +56,11 @@ export function MediaRenderer({
     );
   }
 
-  // Framable video — absolutely-positioned iframe inside aspect-ratio container
+  // Framable video — fills a 4:3 frame by default (Google Drive's player renders the
+  // 16:9 video plus a control bar below it, so 16:9 clips the controls). className
+  // (e.g. max-h) can further constrain it.
   return (
-    <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
+    <div className={`relative w-full ${className}`} style={{ aspectRatio: "4/3" }}>
       <iframe
         src={media.src}
         title={media.title ?? `Video ${index + 1}`}

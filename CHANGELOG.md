@@ -2,6 +2,20 @@
 
 All notable changes to the Pixel Portfolio project.
 
+## [Unreleased] — 2026-08-15
+
+### Added
+- **Featured Work thumbnails on the landing page** — Each featured card now shows a media preview (image or video) above the title/description. Cards fall back to text-only when a project has no embeddable media.
+- **`featured` flag on projects** — Added an optional `featured?: boolean` field to the `Project` type in `src/data/portfolio.ts`. The landing page's "Featured Work" section now renders `projects.filter((p) => p.featured)` instead of the first 3 projects, so you control exactly which projects appear (and how many). Works for both 3D and 2D projects. The existing three projects (Radio, Chair, Tank) were marked `featured: true` to preserve current behavior.
+
+### Fixed
+- **Featured Work video not rendering** — The card only looked for an `image` in `media`, so video-only projects (e.g. the 2D cat) showed nothing. It now falls back to a `video` and renders it in an iframe, while still skipping unframeable Drive URLs (`embeddedfolderview` / `accounts.google.com`).
+- **Video player controls clipped in Featured Work** — Google Drive's `/preview` player renders the 16:9 video plus a control bar below it, so a strict 16:9 frame buried the progress bar/controls into the description. Video frames now use a 4:3 aspect ratio (matching Drive's native 640×480 embed) so the full player fits. Images keep 16:9.
+- **`MediaRenderer` video frame ratio** — The shared renderer (used on project detail hero + gallery) had the same latent 16:9 clipping bug; its default is now 4:3, and it now honors the `className` prop (e.g. `max-h-[70vh]`) instead of ignoring it.
+
+### Changed
+- **Featured Work card layout** — Media container is now `relative` with `absolute inset-0` media, matching the projects-list carousel pattern so images/videos fill their frame consistently.
+
 ## [Unreleased] — 2026-08-13
 
 ### Added
