@@ -104,15 +104,14 @@ export const skillGroups = [
 // ─────────────────────────────────────────────────────────────────────────────
 // PROJECTS — MEDIA FORMATS
 //
-//   IMAGE (Google Drive — use THUMBNAIL endpoint, NOT uc?export=view):
-//     { type: "image", src: "https://drive.google.com/thumbnail?id=FILE_ID&sz=w1920", alt: "Description" }
-//     Get FILE_ID from the shareable link:
-//       https://drive.google.com/file/d/FILE_ID/view?usp=sharing
-//     The thumbnail endpoint supports CORS — uc?export=view does NOT.
-//     sz=w1920 gives full-HD width; use sz=w1280 or sz=w640 for smaller.
-//
-//   IMAGE (local — place file in /public/ folder):
-//     { type: "image", src: "/my-artwork.jpg", alt: "Description" }
+//   IMAGE (LOCAL — the recommended approach. Place the file in /public/images/):
+//     { type: "image", src: "/images/my-artwork.jpg", alt: "Description" }
+//     WHY LOCAL: Google Drive hotlinks (both drive.google.com/thumbnail and the
+//     lh3.googleusercontent.com CDN) are rate-limited — a page loading many images
+//     at once (e.g. the projects list) gets HTTP 429 and broken images. Hosting the
+//     files locally in /public/ is reliable and fast. To add a Drive image, download
+//     it once (curl -L "https://lh3.googleusercontent.com/d/FILE_ID=w1920" -o file.jpg)
+//     and commit it to /public/images/.
 //
 //   VIDEO (Google Drive — embeds in an iframe):
 //     { type: "video", src: "https://drive.google.com/file/d/FILE_ID/preview", title: "Title" }
@@ -156,12 +155,12 @@ export const projects: Project[] = [
     media: [
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=1POpdkuqVN6EcoiaJ0IOclv4oUTJkSC-F&sz=w1920",
+        src: "/images/boiler-1.jpg",
         alt: "Low-Poly Boiler — Stylized Game Prop",
       },
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=15ysaOGcMn1qq8PyTeKTlj5tJz8zFVL4y&sz=w1920",
+        src: "/images/boiler-2.jpg",
         alt: "Low-Poly Boiler — Stylized Game Prop",
       },
     ],
@@ -183,45 +182,23 @@ export const projects: Project[] = [
     media: [
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=1PpbuXY_iyE7RnJgsi1bwhLVCd5oMPZ3v&sz=w1920",
+        src: "/images/radio-1.png",
         alt: "3D Portfolio — Drive Folder",
       },
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=12HeK8dpsXoh4LOiCpNBkYarT4vd3jG5j&sz=w1920",
+        src: "/images/radio-2.png",
         alt: "3D Portfolio — Drive Folder",
       },
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=13AhD5PTAbbPXnhMMK60BzzheVMhR3q8_&sz=w1920",
+        src: "/images/radio-3.png",
         alt: "3D Portfolio — Drive Folder",
       },
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=15DHFaQ0Apk6b1DpxPyXrs3yn0fbVPTEk&sz=w1920",
+        src: "/images/radio-4.png",
         alt: "3D Portfolio — Drive Folder",
-      },
-    ],
-  },
-  {
-    slug: "3d-chair-product-viz",
-    title: "High-Quality 3D Chair — Product Visualization",
-    category: "3D",
-    featured: true,
-    tools: ["Autodesk Maya", "Substance Painter", "Arnold"],
-    description:
-      "A photorealistic 3D chair model created for a client's product visualization, focused on clean topology, accurate materials, and studio lighting.",
-    challenges:
-      "Balancing high visual fidelity with manageable poly-count, while matching the exact fabric and wood textures the client referenced.",
-    solution:
-      "Built a clean subdivision-ready base mesh in Maya, baked high-to-low normal details, and authored PBR materials in Substance Painter. Final render in Arnold with a 3-point studio HDRI setup boosted client engagement by 30%.",
-    driveFolder:
-      "https://drive.google.com/drive/folders/19OaYxkxotZhsF2HcSafY2YIOZq89qwcd?usp=sharing",
-    media: [
-      {
-        type: "video",
-        src: "https://drive.google.com/embeddedfolderview?id=19OaYxkxotZhsF2HcSafY2YIOZq89qwcd#grid",
-        title: "3D Portfolio — Drive Folder",
       },
     ],
   },
@@ -230,7 +207,7 @@ export const projects: Project[] = [
     title: "Low-Poly Tank — Mobile Game Asset",
     category: "3D",
     featured: true,
-    tools: ["Blender", "Substance Painter", "Unity"],
+    tools: ["AutoDesk Maya", "Arnold", "Unity"],
     description:
       "Stylized low-poly tank asset designed for a mobile game, optimized for real-time rendering on lower-end devices.",
     challenges:
@@ -287,22 +264,22 @@ export const projects: Project[] = [
     media: [
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=1pKCjlEmQwby6cm7giukn2qwSQBlBPwCF&sz=w1920",
+        src: "/images/illustration-1.jpg",
         alt: "2D Illustration — Artwork 1",
       },
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=1KcBbH0FMtiXh0GSaoCIfmiFFVg0SOcjC&sz=w1920",
+        src: "/images/illustration-2.jpg",
         alt: "2D Illustration — Artwork 2",
       },
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=1xKT8PlzpqBPTm-zh5fs2hkJ__3GwOUmd&sz=w1920",
+        src: "/images/illustration-3.jpg",
         alt: "Canvas Painting — Artwork 3",
       },
       {
         type: "image",
-        src: "https://drive.google.com/thumbnail?id=1dRZOnup3O5LHB5b_G-bt-JIN3jQ8iF_x&sz=w1920",
+        src: "/images/illustration-4.jpg",
         alt: "Canvas Painting — Artwork 4",
       },
     ],

@@ -81,7 +81,6 @@ function ProjectCard({ project, isFirst }: { project: Project; isFirst: boolean 
               className="absolute inset-0 w-full h-full object-contain"
               loading={isFirst ? "eager" : "lazy"}
               fetchPriority={isFirst ? "high" : "auto"}
-              skipLazyMount={isFirst}
               width={1920}
               height={1920}
             />

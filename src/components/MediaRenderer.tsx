@@ -37,9 +37,6 @@ export function MediaRenderer({
         fetchPriority={fetchPriority}
         // Aspect ratio hint: prevents CLS while Drive thumbnail streams in.
         style={{ backgroundColor: "var(--muted, #1f1f23)" }}
-        // Eager-loading images are LCP candidates — skip the IO gate so the
-        // browser can start the request immediately during initial paint.
-        skipLazyMount={loading === "eager"}
       />
     );
   }
@@ -67,7 +64,7 @@ export function MediaRenderer({
     );
   }
 
-  // Framable video — lazy-mount via IntersectionObserver.
+  // Framable video — native loading="lazy" via LazyIframe.
   // Drive video player renders the 16:9 video plus a control bar, so we use a
   // 4:3 frame by default (matches Drive's native 640x480).
   return (

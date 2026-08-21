@@ -22,7 +22,6 @@ function Home() {
           className="absolute inset-0 h-full w-full object-cover opacity-40"
           loading="eager"
           fetchPriority="high"
-          skipLazyMount
         />
         <div className="absolute inset-0 bg-gradient-fade" />
         <div className="relative mx-auto max-w-6xl px-5 sm:px-8 pt-24 pb-32 sm:pt-36 sm:pb-44">
@@ -109,7 +108,6 @@ function Home() {
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                         loading="lazy"
                         fetchPriority={idx === 0 ? "high" : "auto"}
-                        skipLazyMount={idx === 0}
                         width={1280}
                         height={720}
                       />
