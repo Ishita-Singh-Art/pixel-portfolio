@@ -140,11 +140,38 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "low-poly-boiler-prop",
+    title: "Low-Poly Boiler — Stylized Game Prop",
+    category: "3D",
+    featured: true,
+    tools: ["Autodesk Maya", "Substance Painter"],
+    description:
+      "A stylized low-poly boiler prop built as a self-contained game-ready asset — designed to sit inside a stylized environment (think cozy cabin, steampunk workshop, or survival-camp scene) without breaking the visual language of low-poly art. The model focuses on clean readable shapes, deliberate silhouette breaks (rivets, exhaust pipe, pressure gauge, valve handle), and a warm hand-painted material treatment that holds up at both close and gameplay camera distances. Topology is kept quads-only and well under 3K triangles so it can be instanced freely in a scene without blowing up draw cost, and the UV layout is atlas-friendly for batching with neighbouring props.",
+    challenges:
+      "Convincing boiler parts — pipes, rivets, gauge dial, valves, soot weathering — into a very low triangle budget while keeping the silhouette instantly readable, and getting the warm 'stove-lit' feel to read clearly without resorting to baked lighting or heavy normal maps.",
+    solution:
+      "Blocked the boiler in Blender using primitive shapes first to lock the silhouette, then beveled hard edges by hand instead of adding subdivisions so flat-shaded facets still read as intentional design. Modeled the gauge, valve, and rivets as separate reusable components that snap onto the body via clean pivots. Hand-painted the diffuse in Substance Painter with a tri-tone palette (warm steel, soot-black, ember-orange) and authored a single 512px roughness map with curvature-driven highlights to fake light response — no normal map needed. Final lookdev pass done in Marmoset Toolbag to verify readability under the project's target lighting setup.",
+    driveFolder:
+      "https://drive.google.com/file/d/1POpdkuqVN6EcoiaJ0IOclv4oUTJkSC-F/view?usp=drive_link",
+    media: [
+      {
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=1POpdkuqVN6EcoiaJ0IOclv4oUTJkSC-F&sz=w1920",
+        alt: "Low-Poly Boiler — Stylized Game Prop",
+      },
+      {
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=15ysaOGcMn1qq8PyTeKTlj5tJz8zFVL4y&sz=w1920",
+        alt: "Low-Poly Boiler — Stylized Game Prop",
+      },
+    ],
+  },
+  {
     slug: "old-school-signal-stylized-radio",
     title: "Old School Signal — Stylized Radio",
     category: "3D",
     featured: true,
-    tools: ["Autodesk Maya", "Substance Painter", "Marmoset Toolbag"],
+    tools: ["Autodesk Maya", "Substance Painter"],
     description:
       "A stylized 3D radio prop inspired by classic analog designs, created to capture the charm of retro sound technology in a clean modern art style. This piece focuses on bold shapes, simple forms, and a warm color palette, blending vintage aesthetics with a minimalistic approach. From the mesh grille and chunky knobs to the compact case and handle, every element is built with clean topology suitable for games or animated scenes. The model emphasizes readability, silhouette clarity, and a polished presentation while keeping the overall design lightweight and stylized. Created as a practice piece for hard-surface modeling, stylized shading, and prop design workflows.",
     challenges:
@@ -157,6 +184,21 @@ export const projects: Project[] = [
       {
         type: "image",
         src: "https://drive.google.com/thumbnail?id=1PpbuXY_iyE7RnJgsi1bwhLVCd5oMPZ3v&sz=w1920",
+        alt: "3D Portfolio — Drive Folder",
+      },
+      {
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=12HeK8dpsXoh4LOiCpNBkYarT4vd3jG5j&sz=w1920",
+        alt: "3D Portfolio — Drive Folder",
+      },
+      {
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=13AhD5PTAbbPXnhMMK60BzzheVMhR3q8_&sz=w1920",
+        alt: "3D Portfolio — Drive Folder",
+      },
+      {
+        type: "image",
+        src: "https://drive.google.com/thumbnail?id=15DHFaQ0Apk6b1DpxPyXrs3yn0fbVPTEk&sz=w1920",
         alt: "3D Portfolio — Drive Folder",
       },
     ],
@@ -227,6 +269,7 @@ export const projects: Project[] = [
       },
     ],
   },
+
   {
     slug: "2d-illustrations-canvas",
     title: "2D Illustrations & Canvas Paintings",

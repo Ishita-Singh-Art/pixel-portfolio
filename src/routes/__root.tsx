@@ -55,6 +55,11 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap",
       },
+      // ── Drive image preconnect: cut DNS+TLS+TCP cost from ~300-800ms to ~50ms on first paint ──
+      { rel: "preconnect", href: "https://drive.google.com", crossOrigin: "anonymous" },
+      { rel: "preconnect", href: "https://lh3.googleusercontent.com", crossOrigin: "anonymous" },
+      { rel: "dns-prefetch", href: "https://drive.google.com" },
+      { rel: "dns-prefetch", href: "https://lh3.googleusercontent.com" },
     ],
   }),
   shellComponent: RootShell,

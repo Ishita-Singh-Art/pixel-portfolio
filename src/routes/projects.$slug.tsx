@@ -205,6 +205,7 @@ function HeroSection({ project }: { project: Project }) {
         alt={project.title}
         className="w-full object-contain max-h-[70vh]"
         loading="eager"
+        fetchPriority="high"
       />
     </div>
   );
@@ -219,13 +220,16 @@ function MediaBlock({
   title: string;
   index: number;
 }) {
+  // All gallery items below the hero are below-fold → lazy + IO-gated.
+  // The MediaRenderer passes `loading` through to OptimizedImage / LazyIframe.
   return (
     <div className="rounded-xl overflow-hidden border border-border bg-muted">
       <MediaRenderer
         media={media}
         alt={`${title} — image ${index + 1}`}
         className="w-full object-contain"
-        loading={index === 0 ? "eager" : "lazy"}
+        loading="lazy"
+        fetchPriority="auto"
       />
     </div>
   );

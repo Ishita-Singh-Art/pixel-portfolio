@@ -3,7 +3,8 @@ import { useState, useMemo } from "react";
 import { PageHeader } from "@/components/PageHeader";
 import { projects, type Project } from "@/data/portfolio";
 import { ChevronLeft, ChevronRight, ExternalLink, ArrowRight } from "lucide-react";
-import { MediaRenderer } from "@/components/MediaRenderer";
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { LazyIframe } from "@/components/LazyIframe";
 
 export const Route = createFileRoute("/projects/")({
   head: () => ({
@@ -51,15 +52,15 @@ function ProjectsIndexPage() {
       </div>
 
       <div className="space-y-12">
-        {list.map((p) => (
-          <ProjectCard key={p.slug} project={p} />
+        {list.map((p, listIdx) => (
+          <ProjectCard key={p.slug} project={p} isFirst={listIdx === 0} />
         ))}
       </div>
     </div>
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, isFirst }: { project: Project; isFirst: boolean }) {
   const [idx, setIdx] = useState(0);
   const total = project.media.length;
   const current = project.media[idx];
@@ -69,21 +70,27 @@ function ProjectCard({ project }: { project: Project }) {
       {/* Grid with items-stretch so both columns match height */}
       <div className="grid lg:grid-cols-[1.2fr_1fr] items-stretch">
         {/* Carousel — stretches to full height of the grid row */}
-        <div className="relative overflow-hidden min-h-[240px]">
+        <div className="relative overflow-hidden min-h-[240px] bg-muted">
           {current.type === "image" ? (
-            <img
+            <OptimizedImage
               src={current.src}
               alt={current.alt ?? project.title}
-              className="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
+              // object-contain so the full image is visible — the row's height is
+              // driven by the right info column, so object-cover would crop top/
+              // bottom of paintings. The bg-muted above provides the letterbox bars.
+              className="absolute inset-0 w-full h-full object-contain"
+              loading={isFirst ? "eager" : "lazy"}
+              fetchPriority={isFirst ? "high" : "auto"}
+              skipLazyMount={isFirst}
+              width={1920}
+              height={1920}
             />
           ) : (
-            <iframe
+            <LazyIframe
               src={current.src}
               title={current.title ?? project.title}
               className="absolute inset-0 w-full h-full"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
+              eager={isFirst}
             />
           )}
 

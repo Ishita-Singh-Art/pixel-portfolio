@@ -1,5 +1,7 @@
 import { ExternalLink, FolderOpen } from "lucide-react";
 import type { ProjectMedia } from "@/data/portfolio";
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { LazyIframe } from "@/components/LazyIframe";
 
 /** Google Drive URLs that can't be framed on external sites */
 function isUnframeable(src: string): boolean {
@@ -13,6 +15,8 @@ type MediaRendererProps = {
   className?: string;
   /** Use "eager" for above-fold / hero images */
   loading?: "lazy" | "eager";
+  /** Use "high" only on the single LCP image per page. */
+  fetchPriority?: "auto" | "high" | "low";
 };
 
 export function MediaRenderer({
@@ -21,14 +25,21 @@ export function MediaRenderer({
   index = 0,
   className = "",
   loading = "lazy",
+  fetchPriority = "auto",
 }: MediaRendererProps) {
   if (media.type === "image") {
     return (
-      <img
+      <OptimizedImage
         src={media.src}
         alt={media.alt ?? alt}
         className={className || "w-full object-contain"}
         loading={loading}
+        fetchPriority={fetchPriority}
+        // Aspect ratio hint: prevents CLS while Drive thumbnail streams in.
+        style={{ backgroundColor: "var(--muted, #1f1f23)" }}
+        // Eager-loading images are LCP candidates — skip the IO gate so the
+        // browser can start the request immediately during initial paint.
+        skipLazyMount={loading === "eager"}
       />
     );
   }
@@ -56,18 +67,16 @@ export function MediaRenderer({
     );
   }
 
-  // Framable video — fills a 4:3 frame by default (Google Drive's player renders the
-  // 16:9 video plus a control bar below it, so 16:9 clips the controls). className
-  // (e.g. max-h) can further constrain it.
+  // Framable video — lazy-mount via IntersectionObserver.
+  // Drive video player renders the 16:9 video plus a control bar, so we use a
+  // 4:3 frame by default (matches Drive's native 640x480).
   return (
-    <div className={`relative w-full ${className}`} style={{ aspectRatio: "4/3" }}>
-      <iframe
-        src={media.src}
-        title={media.title ?? `Video ${index + 1}`}
-        className="absolute inset-0 h-full w-full border-0"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-      />
-    </div>
+    <LazyIframe
+      src={media.src}
+      title={media.title ?? `Video ${index + 1}`}
+      className={className}
+      aspectRatio="4/3"
+      eager={loading === "eager"}
+    />
   );
 }

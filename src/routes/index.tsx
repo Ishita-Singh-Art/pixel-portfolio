@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import heroImg from "@/assets/hero.jpg";
 import { profile, skillGroups, projects } from "@/data/portfolio";
 import { ArrowRight, Download, Mail } from "lucide-react";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -13,12 +14,15 @@ function Home() {
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <img
+        <OptimizedImage
           src={heroImg}
           alt="3D artist studio"
           width={1536}
           height={1024}
           className="absolute inset-0 h-full w-full object-cover opacity-40"
+          loading="eager"
+          fetchPriority="high"
+          skipLazyMount
         />
         <div className="absolute inset-0 bg-gradient-fade" />
         <div className="relative mx-auto max-w-6xl px-5 sm:px-8 pt-24 pb-32 sm:pt-36 sm:pb-44">
@@ -76,7 +80,7 @@ function Home() {
           </Link>
         </div>
         <div className="grid md:grid-cols-3 gap-5">
-          {featured.map((p) => {
+          {featured.map((p, idx) => {
             const thumb =
               p.media.find((m) => m.type === "image") ??
               p.media.find(
@@ -99,11 +103,15 @@ function Home() {
                     }`}
                   >
                     {thumb.type === "image" ? (
-                      <img
+                      <OptimizedImage
                         src={thumb.src}
                         alt={thumb.alt ?? p.title}
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                         loading="lazy"
+                        fetchPriority={idx === 0 ? "high" : "auto"}
+                        skipLazyMount={idx === 0}
+                        width={1280}
+                        height={720}
                       />
                     ) : (
                       <iframe
@@ -112,6 +120,7 @@ function Home() {
                         className="absolute inset-0 h-full w-full border-0"
                         allow="autoplay; encrypted-media"
                         allowFullScreen
+                        loading="lazy"
                       />
                     )}
                   </div>

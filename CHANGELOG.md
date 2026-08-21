@@ -2,6 +2,30 @@
 
 All notable changes to the Pixel Portfolio project.
 
+## [Unreleased] — 2026-08-21
+
+### Added
+- **`OptimizedImage` component** (`src/components/OptimizedImage.tsx`) — Drop-in `<img>` replacement that enforces modern performance hints:
+  - `loading="lazy"` by default (opt out with `eager` for above-fold/LCP images)
+  - `decoding="async"` so image decode never blocks the main thread
+  - `fetchPriority` forwarding (React's JSX type system drops `fetchpriority` unless forwarded manually)
+  - Explicit `width`/`height` to prevent CLS layout shift
+  - IntersectionObserver gating — defers the real `src` attach until ~200px from the viewport (stricter than native lazy on mobile Safari / older Chromium)
+  - Fade-in on load (200ms opacity transition) to eliminate FOUC on slow Drive thumbnails
+  - User-gesture safety net (scroll/touch/mousemove) so wrapped anchor clicks aren't missed
+  - `onError` fallback that reveals the image so layout doesn't collapse on transient Drive failures
+- **`LazyIframe` component** (`src/components/LazyIframe.tsx`) — Lazy-mounting iframe for Google Drive `/preview` embeds. Holds a skeleton placeholder ("Loading video…") until the element scrolls within 200px of the viewport, then attaches the real `src`. Drive's player + control bar pulls ~300KB of JS, so eager-mounting several starves the image bandwidth budget. Defaults to 4:3 aspect ratio (matches Drive's native 640×480 player + controls).
+- **New project: "Low-Poly Boiler — Stylized Game Prop"** — Added to `src/data/portfolio.ts` as a featured 3D project with full description, challenge/solution breakdown, Drive folder link, and two thumbnail images.
+- **Drive image preconnect** — Added `preconnect` + `dns-prefetch` for `drive.google.com` and `lh3.googleusercontent.com` in `__root.tsx`, cutting DNS+TLS+TCP cost from ~300–800ms to ~50ms on first paint.
+
+### Changed
+- **`MediaRenderer` now uses `OptimizedImage` / `LazyIframe`** — Images route through `OptimizedImage` (with a muted background color to prevent CLS while thumbnails stream in), and framable videos route through `LazyIframe` (lazy-mounted via IntersectionObserver). Added a `fetchPriority` prop.
+- **Home page hero** — Switched to `OptimizedImage` with `loading="eager"`, `fetchPriority="high"`, and `skipLazyMount` (it's the LCP image).
+- **Featured Work cards** — First card's thumbnail is eager + high priority; the rest stay lazy. Added explicit `width`/`height` (1280×720) to prevent CLS. Video iframes now set `loading="lazy"`.
+- **Projects list carousel** — First project's media is eager + high priority; the rest lazy. Images switched from `object-cover` to `object-contain` (with `bg-muted` letterbox bars) so full paintings are visible instead of cropped. Added explicit `width`/`height` (1920×1920). Videos now use `LazyIframe`.
+- **Project detail gallery** — All gallery items below the hero are now lazy + IO-gated (previously the first gallery item was eager).
+- **"Old School Signal" radio project** — Removed "Marmoset Toolbag" from its tools list; added three more thumbnail images to its media array.
+
 ## [Unreleased] — 2026-08-15
 
 ### Added
@@ -57,3 +81,26 @@ All notable changes to the Pixel Portfolio project.
 
 ### Added
 - **CHANGELOG.md** — This file.
+
+## [Unreleased] — 2026-05-12
+
+### Added
+- **Initial portfolio site build** — Built out the full site from the TanStack Start template:
+  - `SiteNav`, `SiteFooter`, and `PageHeader` shared layout components
+  - Pages: Home (`index.tsx`), Projects (`projects.tsx`), Skills (`skills.tsx`), Experience (`experience.tsx`), Resume (`resume.tsx`)
+  - `src/data/portfolio.ts` — project, experience, and skill data
+  - Hero image (`src/assets/hero.jpg`) and resume PDF (`public/IshitaSingh_Resume.pdf`)
+  - 2D/3D Google Drive folder embeds for project media
+- **Skill icons & map** — Added `SkillIcon` component and `src/data/skillIcons.ts` mapping skills to icons, wired into the Skills page.
+- **Theme toggle** — Added `ThemeToggle` component and dark/light theme support in `SiteNav` and `styles.css`.
+
+### Changed
+- **Hero theme** — Switched the hero image to a pastel theme.
+- **Experience locations** — Updated the location for all experience entries to "Raipur, Chhattisgarh, India".
+- **Wrangler worker name** — Renamed the Cloudflare worker from `tanstack-start-app` to `ishita-singh-portfolio` (later adjusted to `ishita-singh-` for the Pages deployment).
+
+### Fixed
+- **Dark mode toggle** — Fixed the dark mode toggle behavior.
+
+### Deployment
+- **Cloudflare Pages deployment** — Merged PR #2 (`Pages_Deployment` branch) to deploy the site to Cloudflare Pages, including `package-lock.json` and `wrangler.jsonc` updates.
