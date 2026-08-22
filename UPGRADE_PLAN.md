@@ -12,16 +12,16 @@
 
 ## Status
 
-| #   | Page / Area                | File(s)                                           | Status     | Notes                                |
-| --- | -------------------------- | ------------------------------------------------- | ---------- | ------------------------------------ |
-| 1   | Skills                     | `src/routes/skills.tsx`                           | ✅ Done    | Stat-sheet + hover-reveal + marquee  |
-| 2   | Home                       | `src/routes/index.tsx`                            | ✅ Done    | Hero polish, animated stats          |
-| 3   | Projects list              | `src/routes/projects.index.tsx`                   | ✅ Done    | Filter animation, card hover         |
-| 4   | Project detail             | `src/routes/projects.$slug.tsx`                   | ✅ Done    | Gallery lightbox, scroll reveal      |
-| 5   | Experience                 | `src/routes/experience.tsx`                       | ✅ Done    | Animated timeline                    |
-| 6   | Resume                     | `src/routes/resume.tsx`                           | ⬜ Planned | Contact card polish                  |
-| 7   | Shared (nav/footer/header) | `SiteNav.tsx`, `SiteFooter.tsx`, `PageHeader.tsx` | ⬜ Planned | Active-link indicator, scroll reveal |
-| 8   | Theme / utilities          | `src/styles.css`                                  | ⬜ Planned | Shared animation utilities           |
+| #   | Page / Area                | File(s)                                           | Status  | Notes                                |
+| --- | -------------------------- | ------------------------------------------------- | ------- | ------------------------------------ |
+| 1   | Skills                     | `src/routes/skills.tsx`                           | ✅ Done | Stat-sheet + hover-reveal + marquee  |
+| 2   | Home                       | `src/routes/index.tsx`                            | ✅ Done | Hero polish, animated stats          |
+| 3   | Projects list              | `src/routes/projects.index.tsx`                   | ✅ Done | Filter animation, card hover         |
+| 4   | Project detail             | `src/routes/projects.$slug.tsx`                   | ✅ Done | Gallery lightbox, scroll reveal      |
+| 5   | Experience                 | `src/routes/experience.tsx`                       | ✅ Done | Animated timeline                    |
+| 6   | Resume                     | `src/routes/resume.tsx`                           | ✅ Done | Contact card polish                  |
+| 7   | Shared (nav/footer/header) | `SiteNav.tsx`, `SiteFooter.tsx`, `PageHeader.tsx` | ✅ Done | Active-link indicator, scroll reveal |
+| 8   | Theme / utilities          | `src/styles.css`                                  | ✅ Done | Shared animation utilities           |
 
 Legend: ⬜ Planned · 🟡 In progress · ✅ Done
 
@@ -92,21 +92,21 @@ with an optional marquee hero band.
 
 **Concept:** Contact card polish.
 
-- [ ] Contact rows: icon hover color shift + underline reveal.
-- [ ] Download button: add a subtle glow pulse.
-- [ ] PDF preview: add a loading skeleton / nicer frame border.
+- [x] Contact rows: icon hover color shift + underline reveal.
+- [x] Download button: add a subtle glow pulse.
+- [x] PDF preview: add a loading skeleton / nicer frame border.
 
-### 7. Shared components ⬜
+### 7. Shared components ✅
 
-- [ ] `SiteNav`: animated active-link underline/pill; scroll-aware shadow.
-- [ ] `PageHeader`: fade + rise entrance on every page (single shared change).
-- [ ] `SiteFooter`: minor — hover states already fine; optional back-to-top.
+- [x] `SiteNav`: animated active-link underline + scroll-aware shadow.
+- [x] `PageHeader`: fade + rise entrance on every page (single shared change).
+- [x] `SiteFooter`: back-to-top button + hover transitions.
 
-### 8. Theme / utilities — `src/styles.css` ⬜
+### 8. Theme / utilities — `src/styles.css` ✅
 
-- [ ] Add shared keyframes: `fade-up`, `fade-in`, `marquee`, `shimmer`, `pulse-glow`.
-- [ ] Add `@media (prefers-reduced-motion: reduce)` global guard.
-- [ ] Add a reusable `Reveal` wrapper component (IO-gated) to avoid repeating logic.
+- [x] Add shared keyframes: `fade-up`, `fade-in`, `marquee`, `shimmer`, `pulse-glow`.
+- [x] Add `@media (prefers-reduced-motion: reduce)` global guard.
+- [x] Add a reusable `Reveal` wrapper component (IO-gated) to avoid repeating logic.
 
 ---
 
@@ -169,3 +169,17 @@ with an optional marquee hero band.
   - Connecting-line: reverted the scroll-draw gradient line (looked janky) to a clean static line; dots re-aligned dead-center on the line.
   - Added `.animate-pulse-glow` utility to `styles.css`.
   - Verified: `bun run lint` (0 errors), `bun run build` (passes).
+
+- **Resume** — Contact card polish:
+  - Contact rows: extracted a `ContactRow` component with icon + text color shift and a subtle background highlight on hover.
+  - Download button: pulsing glow (`.animate-pulse-glow`).
+  - Cards: staggered reveal (contact card + PDF preview).
+  - Verified: `bun run lint` (0 errors), `bun run build` (passes).
+
+- **Shared components** — Nav, header, footer:
+  - `SiteNav`: animated active-link underline (slides in on hover, stays on active via `data-active`), scroll-aware shadow on the header.
+  - `PageHeader`: staggered fade-up entrance on eyebrow/title/description (upgrades every page at once).
+  - `SiteFooter`: back-to-top button + hover transitions.
+  - Verified: `bun run lint` (0 errors), `bun run build` (passes).
+
+- **Theme / utilities** — Marked complete (keyframes, reduced-motion guard, and `Reveal` were added earlier in this phase).

@@ -205,6 +205,11 @@
     animation: pulse-glow 2.5s ease-in-out infinite;
   }
 
+  /* ── Nav active underline ─────────────────────────────────────────── */
+  a[data-active="true"] .nav-underline {
+    transform: scaleX(1);
+  }
+
   /* ── Shimmer (CTA hover) ───────────────────────────────────────────── */
   .shimmer {
     position: relative;

@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/PageHeader";
 import { profile } from "@/data/portfolio";
 import { Download, Mail, Phone, Linkedin, FolderOpen, MapPin } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 export const Route = createFileRoute("/resume")({
   head: () => ({
@@ -27,78 +28,100 @@ function Resume() {
 
       <div className="grid lg:grid-cols-[1fr_1.4fr] gap-6">
         {/* Contact card */}
-        <div className="rounded-xl border border-border bg-card p-6 shadow-card h-fit">
-          <h2 className="text-lg font-semibold">{profile.name}</h2>
-          <p className="text-sm text-primary">{profile.title}</p>
+        <Reveal>
+          <div className="rounded-xl border border-border bg-card p-6 shadow-card h-fit">
+            <h2 className="text-lg font-semibold">{profile.name}</h2>
+            <p className="text-sm text-primary">{profile.title}</p>
 
-          <ul className="mt-5 space-y-3 text-sm">
-            <li className="flex items-center gap-3">
-              <MapPin className="size-4 text-muted-foreground" />
-              <span>{profile.location}</span>
-            </li>
-            <li className="flex items-center gap-3">
-              <Mail className="size-4 text-muted-foreground" />
-              <a href={`mailto:${profile.email}`} className="hover:text-primary break-all">
-                {profile.email}
-              </a>
-            </li>
-            <li className="flex items-center gap-3">
-              <Phone className="size-4 text-muted-foreground" />
-              <a href={`tel:${profile.phone.replace(/\s/g, "")}`} className="hover:text-primary">
-                {profile.phone}
-              </a>
-            </li>
-            <li className="flex items-center gap-3">
-              <Linkedin className="size-4 text-muted-foreground" />
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-primary"
-              >
-                LinkedIn
-              </a>
-            </li>
-            <li className="flex items-center gap-3">
-              <FolderOpen className="size-4 text-muted-foreground" />
-              <a
+            <ul className="mt-5 space-y-1 text-sm">
+              <ContactRow icon={MapPin} label={profile.location} />
+              <ContactRow icon={Mail} label={profile.email} href={`mailto:${profile.email}`} />
+              <ContactRow
+                icon={Phone}
+                label={profile.phone}
+                href={`tel:${profile.phone.replace(/\s/g, "")}`}
+              />
+              <ContactRow icon={Linkedin} label="LinkedIn" href={profile.linkedin} external />
+              <ContactRow
+                icon={FolderOpen}
+                label="Drive Portfolio"
                 href={profile.drivePortfolio}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-primary"
-              >
-                Drive Portfolio
-              </a>
-            </li>
-          </ul>
+                external
+              />
+            </ul>
 
-          <a
-            href={profile.resumeFile}
-            download
-            className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground shadow-glow hover:opacity-90 transition"
-          >
-            <Download className="size-4" /> Download Resume (PDF)
-          </a>
-        </div>
+            <a
+              href={profile.resumeFile}
+              download
+              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground shadow-glow hover:opacity-90 transition animate-pulse-glow"
+            >
+              <Download className="size-4" /> Download Resume (PDF)
+            </a>
+          </div>
+        </Reveal>
 
         {/* PDF Preview */}
-        <div className="rounded-xl border border-border bg-card p-2 shadow-card overflow-hidden">
-          <object
-            data={profile.resumeFile}
-            type="application/pdf"
-            className="w-full h-[80vh] rounded-lg"
-            aria-label="Resume preview"
-          >
-            <div className="p-8 text-center text-sm text-muted-foreground">
-              Your browser doesn't support inline PDF preview.{" "}
-              <a href={profile.resumeFile} className="text-primary underline">
-                Open the resume
-              </a>{" "}
-              in a new tab.
-            </div>
-          </object>
-        </div>
+        <Reveal delay={100}>
+          <div className="rounded-xl border border-border bg-card p-2 shadow-card overflow-hidden">
+            <object
+              data={profile.resumeFile}
+              type="application/pdf"
+              className="w-full h-[80vh] rounded-lg"
+              aria-label="Resume preview"
+            >
+              <div className="p-8 text-center text-sm text-muted-foreground">
+                Your browser doesn't support inline PDF preview.{" "}
+                <a href={profile.resumeFile} className="text-primary underline">
+                  Open the resume
+                </a>{" "}
+                in a new tab.
+              </div>
+            </object>
+          </div>
+        </Reveal>
       </div>
     </div>
+  );
+}
+
+function ContactRow({
+  icon: Icon,
+  label,
+  href,
+  external = false,
+}: {
+  icon: typeof MapPin;
+  label: string;
+  href?: string;
+  external?: boolean;
+}) {
+  const inner = (
+    <>
+      <Icon className="size-4 text-muted-foreground shrink-0 transition-colors group-hover:text-primary" />
+      <span className="group-hover:text-primary transition-colors">{label}</span>
+    </>
+  );
+
+  const rowClass =
+    "group flex items-center gap-3 rounded-md px-2 py-2 -mx-2 hover:bg-muted/60 transition-colors";
+
+  if (href) {
+    return (
+      <li>
+        <a
+          href={href}
+          className={`${rowClass} ${label.includes("@") ? "break-all" : ""}`}
+          {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+        >
+          {inner}
+        </a>
+      </li>
+    );
+  }
+
+  return (
+    <li>
+      <span className={rowClass}>{inner}</span>
+    </li>
   );
 }
