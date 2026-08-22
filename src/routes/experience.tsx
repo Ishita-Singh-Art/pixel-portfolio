@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/PageHeader";
 import { experiences, education } from "@/data/portfolio";
+import { Reveal } from "@/components/Reveal";
 
 export const Route = createFileRoute("/experience")({
   head: () => ({
@@ -24,10 +25,11 @@ function Experience() {
         description="Freelance work, teaching, and collaborations in 3D and 2D art."
       />
 
-      <ol className="relative border-l border-border ml-3 space-y-10">
-        {experiences.map((e) => (
-          <li key={e.role + e.company} className="pl-6">
-            <span className="absolute -left-[7px] mt-2 size-3 rounded-full bg-primary shadow-glow" />
+      <ol className="relative ml-3 border-l border-border space-y-10">
+        {experiences.map((e, ei) => (
+          <Reveal key={e.role + e.company} as="li" delay={ei * 80} className="relative pl-6">
+            {/* Dot — centered on the border line (12px dot, -6px left centers it on x=0) */}
+            <span className="absolute -left-[6px] top-2 size-3 rounded-full bg-primary shadow-glow animate-pulse-glow" />
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h3 className="text-xl font-semibold">{e.role}</h3>
               <span className="text-xs text-muted-foreground">{e.period}</span>
@@ -40,18 +42,20 @@ function Experience() {
                 <li key={pt}>{pt}</li>
               ))}
             </ul>
-          </li>
+          </Reveal>
         ))}
       </ol>
 
       <h2 className="mt-20 mb-6 text-2xl font-bold tracking-tight">Education</h2>
       <div className="grid sm:grid-cols-2 gap-4">
-        {education.map((ed) => (
-          <div key={ed.school} className="rounded-xl border border-border bg-card p-5 shadow-card">
-            <p className="text-xs uppercase tracking-widest text-secondary">{ed.period}</p>
-            <h3 className="mt-2 font-semibold">{ed.school}</h3>
-            <p className="text-sm text-muted-foreground">{ed.degree}</p>
-          </div>
+        {education.map((ed, edi) => (
+          <Reveal key={ed.school} delay={edi * 80}>
+            <div className="skill-card-hover rounded-xl border border-border bg-card p-5 shadow-card hover:border-accent/60 h-full">
+              <p className="text-xs uppercase tracking-widest text-secondary">{ed.period}</p>
+              <h3 className="mt-2 font-semibold">{ed.school}</h3>
+              <p className="text-sm text-muted-foreground">{ed.degree}</p>
+            </div>
+          </Reveal>
         ))}
       </div>
     </div>

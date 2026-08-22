@@ -25,12 +25,14 @@ function Home() {
           fetchPriority="high"
         />
         <div className="absolute inset-0 bg-gradient-fade" />
+        {/* Left scrim — keeps the intro text readable over the hero image */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/55 to-transparent" />
         <div className="relative mx-auto max-w-6xl px-5 sm:px-8 pt-24 pb-32 sm:pt-36 sm:pb-44">
           <p className="animate-fade-up text-xs uppercase tracking-[0.3em] text-primary mb-4">
             {profile.location} · Freelance & Collaborations
           </p>
           <p
-            className="animate-fade-up text-sm sm:text-base font-medium text-muted-foreground mb-3"
+            className="animate-fade-up text-sm sm:text-base font-medium text-foreground/80 mb-3"
             style={{ animationDelay: "80ms" }}
           >
             Hi, I'm
@@ -42,13 +44,13 @@ function Home() {
             <span className="text-gradient">{profile.name}</span>
           </h1>
           <p
-            className="animate-fade-up mt-4 text-2xl sm:text-3xl font-display font-semibold text-foreground/90"
+            className="animate-fade-up mt-4 text-2xl sm:text-3xl font-display font-semibold text-foreground"
             style={{ animationDelay: "240ms" }}
           >
             {profile.title} <span className="text-primary">·</span> crafted with care.
           </p>
           <p
-            className="animate-fade-up mt-6 max-w-xl text-base sm:text-lg text-muted-foreground"
+            className="animate-fade-up mt-6 max-w-xl text-base sm:text-lg text-foreground/80"
             style={{ animationDelay: "320ms" }}
           >
             {profile.tagline}

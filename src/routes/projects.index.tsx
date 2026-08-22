@@ -20,8 +20,11 @@ export const Route = createFileRoute("/projects/")({
   component: ProjectsIndexPage,
 });
 
+const FILTERS = ["All", "3D", "2D"] as const;
+type Filter = (typeof FILTERS)[number];
+
 function ProjectsIndexPage() {
-  const [filter, setFilter] = useState<"All" | "3D" | "2D">("All");
+  const [filter, setFilter] = useState<Filter>("All");
   const list = useMemo(
     () => (filter === "All" ? projects : projects.filter((p) => p.category === filter)),
     [filter],
@@ -36,24 +39,36 @@ function ProjectsIndexPage() {
       />
 
       <div className="mb-8 flex gap-2">
-        {(["All", "3D", "2D"] as const).map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`rounded-md px-4 py-2 text-sm border transition ${
-              filter === f
-                ? "bg-primary text-primary-foreground border-primary shadow-glow"
-                : "bg-card text-muted-foreground border-border hover:text-foreground"
-            }`}
-          >
-            {f}
-          </button>
-        ))}
+        {FILTERS.map((f) => {
+          const count =
+            f === "All" ? projects.length : projects.filter((p) => p.category === f).length;
+          const active = filter === f;
+          return (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`rounded-md px-4 py-2 text-sm border transition-all duration-300 ${
+                active
+                  ? "bg-primary text-primary-foreground border-primary shadow-glow"
+                  : "bg-card text-muted-foreground border-border hover:text-foreground hover:border-primary/40"
+              }`}
+            >
+              {f} <span className={active ? "opacity-80" : "opacity-50"}>{count}</span>
+            </button>
+          );
+        })}
       </div>
 
-      <div className="space-y-12">
+      {/* key={filter} remounts the list on filter change so cards re-stagger in */}
+      <div key={filter} className="space-y-12">
         {list.map((p, listIdx) => (
-          <ProjectCard key={p.slug} project={p} isFirst={listIdx === 0} />
+          <div
+            key={p.slug}
+            className="animate-fade-in"
+            style={{ animationDelay: `${listIdx * 80}ms` }}
+          >
+            <ProjectCard project={p} isFirst={listIdx === 0} />
+          </div>
         ))}
       </div>
     </div>
@@ -66,32 +81,35 @@ function ProjectCard({ project, isFirst }: { project: Project; isFirst: boolean 
   const current = project.media[idx];
 
   return (
-    <article className="rounded-2xl border border-border bg-card overflow-hidden shadow-card">
+    <article className="skill-card-hover rounded-2xl border border-border bg-card overflow-hidden shadow-card hover:border-primary/40">
       {/* Grid with items-stretch so both columns match height */}
       <div className="grid lg:grid-cols-[1.2fr_1fr] items-stretch">
         {/* Carousel — stretches to full height of the grid row */}
         <div className="relative overflow-hidden min-h-[240px] bg-muted">
-          {current.type === "image" ? (
-            <OptimizedImage
-              src={current.src}
-              alt={current.alt ?? project.title}
-              // object-contain so the full image is visible — the row's height is
-              // driven by the right info column, so object-cover would crop top/
-              // bottom of paintings. The bg-muted above provides the letterbox bars.
-              className="absolute inset-0 w-full h-full object-contain"
-              loading={isFirst ? "eager" : "lazy"}
-              fetchPriority={isFirst ? "high" : "auto"}
-              width={1920}
-              height={1920}
-            />
-          ) : (
-            <LazyIframe
-              src={current.src}
-              title={current.title ?? project.title}
-              className="absolute inset-0 w-full h-full"
-              eager={isFirst}
-            />
-          )}
+          {/* key={idx} remounts the media so it crossfades on swap */}
+          <div key={idx} className="animate-fade-in absolute inset-0">
+            {current.type === "image" ? (
+              <OptimizedImage
+                src={current.src}
+                alt={current.alt ?? project.title}
+                // object-contain so the full image is visible — the row's height is
+                // driven by the right info column, so object-cover would crop top/
+                // bottom of paintings. The bg-muted above provides the letterbox bars.
+                className="absolute inset-0 w-full h-full object-contain"
+                loading={isFirst ? "eager" : "lazy"}
+                fetchPriority={isFirst ? "high" : "auto"}
+                width={1920}
+                height={1920}
+              />
+            ) : (
+              <LazyIframe
+                src={current.src}
+                title={current.title ?? project.title}
+                className="absolute inset-0 w-full h-full"
+                eager={isFirst}
+              />
+            )}
+          </div>
 
           {total > 1 && (
             <>

@@ -1,7 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useState } from "react";
 import { projects, type Project } from "@/data/portfolio";
-import { ArrowLeft, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, ExternalLink, X } from "lucide-react";
 import { MediaRenderer } from "@/components/MediaRenderer";
+import { Reveal } from "@/components/Reveal";
 
 export const Route = createFileRoute("/projects/$slug")({
   head: ({ params }) => {
@@ -27,6 +29,9 @@ function ProjectDetailPage() {
   const prev = idx > 0 ? projects[idx - 1] : null;
   const next = idx < projects.length - 1 ? projects[idx + 1] : null;
 
+  // Lightbox state — holds the image src currently enlarged (null = closed).
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
   return (
     <div className="mx-auto max-w-7xl px-5 sm:px-8">
       {/* Back link */}
@@ -41,7 +46,9 @@ function ProjectDetailPage() {
       </div>
 
       {/* Hero media — full-width */}
-      <HeroSection project={project} />
+      <div className="animate-fade-in">
+        <HeroSection project={project} />
+      </div>
 
       {/* Title + metadata bar */}
       <div className="mt-8 mb-10">
@@ -68,14 +75,16 @@ function ProjectDetailPage() {
         {/* Main content */}
         <div>
           {/* Description */}
-          <section className="mb-10">
-            <h2 className="text-lg font-semibold uppercase tracking-widest text-primary mb-4">
-              About
-            </h2>
-            <p className="text-base text-foreground/85 leading-relaxed whitespace-pre-line">
-              {project.description}
-            </p>
-          </section>
+          <Reveal>
+            <section className="mb-10">
+              <h2 className="text-lg font-semibold uppercase tracking-widest text-primary mb-4">
+                About
+              </h2>
+              <p className="text-base text-foreground/85 leading-relaxed whitespace-pre-line">
+                {project.description}
+              </p>
+            </section>
+          </Reveal>
 
           {/* Full gallery — all media */}
           {project.media.length > 0 && (
@@ -85,7 +94,14 @@ function ProjectDetailPage() {
               </h2>
               <div className="space-y-6">
                 {project.media.map((m, i) => (
-                  <MediaBlock key={i} media={m} title={project.title} index={i} />
+                  <Reveal key={i} delay={i * 60}>
+                    <MediaBlock
+                      media={m}
+                      title={project.title}
+                      index={i}
+                      onOpen={m.type === "image" ? () => setLightbox(m.src) : undefined}
+                    />
+                  </Reveal>
                 ))}
               </div>
             </section>
@@ -96,8 +112,12 @@ function ProjectDetailPage() {
             <h2 className="text-lg font-semibold uppercase tracking-widest text-primary mb-4">
               Process
             </h2>
-            <ProcessBlock label="Challenge" text={project.challenges} />
-            <ProcessBlock label="Solution" text={project.solution} />
+            <Reveal>
+              <ProcessBlock label="Challenge" text={project.challenges} />
+            </Reveal>
+            <Reveal delay={100}>
+              <ProcessBlock label="Solution" text={project.solution} />
+            </Reveal>
           </section>
         </div>
 
@@ -188,6 +208,31 @@ function ProjectDetailPage() {
           )}
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-background/90 backdrop-blur-sm p-4 sm:p-8 animate-fade-in"
+          onClick={() => setLightbox(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged image"
+        >
+          <button
+            aria-label="Close"
+            onClick={() => setLightbox(null)}
+            className="absolute top-4 right-4 rounded-full bg-card border border-border p-2 hover:bg-muted transition"
+          >
+            <X className="size-5" />
+          </button>
+          <img
+            src={lightbox}
+            alt={project.title}
+            className="max-h-full max-w-full object-contain rounded-lg shadow-glow"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -215,24 +260,39 @@ function MediaBlock({
   media,
   title,
   index,
+  onOpen,
 }: {
   media: Project["media"][number];
   title: string;
   index: number;
+  onOpen?: () => void;
 }) {
   // All gallery items below the hero are below-fold → lazy + IO-gated.
   // The MediaRenderer passes `loading` through to OptimizedImage / LazyIframe.
-  return (
-    <div className="rounded-xl overflow-hidden border border-border bg-muted">
-      <MediaRenderer
-        media={media}
-        alt={`${title} — image ${index + 1}`}
-        className="w-full object-contain"
-        loading="lazy"
-        fetchPriority="auto"
-      />
-    </div>
+  const content = (
+    <MediaRenderer
+      media={media}
+      alt={`${title} — image ${index + 1}`}
+      className="w-full object-contain"
+      loading="lazy"
+      fetchPriority="auto"
+    />
   );
+
+  // Images are clickable to enlarge (lightbox); videos render as-is.
+  if (media.type === "image" && onOpen) {
+    return (
+      <button
+        onClick={onOpen}
+        className="group block w-full rounded-xl overflow-hidden border border-border bg-muted text-left cursor-zoom-in"
+        aria-label={`Enlarge ${title} — image ${index + 1}`}
+      >
+        {content}
+      </button>
+    );
+  }
+
+  return <div className="rounded-xl overflow-hidden border border-border bg-muted">{content}</div>;
 }
 
 function ProcessBlock({ label, text }: { label: string; text: string }) {

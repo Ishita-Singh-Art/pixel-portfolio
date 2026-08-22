@@ -16,9 +16,9 @@
 | --- | -------------------------- | ------------------------------------------------- | ---------- | ------------------------------------ |
 | 1   | Skills                     | `src/routes/skills.tsx`                           | ✅ Done    | Stat-sheet + hover-reveal + marquee  |
 | 2   | Home                       | `src/routes/index.tsx`                            | ✅ Done    | Hero polish, animated stats          |
-| 3   | Projects list              | `src/routes/projects.index.tsx`                   | ⬜ Planned | Filter animation, card hover         |
-| 4   | Project detail             | `src/routes/projects.$slug.tsx`                   | ⬜ Planned | Gallery lightbox, scroll reveal      |
-| 5   | Experience                 | `src/routes/experience.tsx`                       | ⬜ Planned | Animated timeline                    |
+| 3   | Projects list              | `src/routes/projects.index.tsx`                   | ✅ Done    | Filter animation, card hover         |
+| 4   | Project detail             | `src/routes/projects.$slug.tsx`                   | ✅ Done    | Gallery lightbox, scroll reveal      |
+| 5   | Experience                 | `src/routes/experience.tsx`                       | ✅ Done    | Animated timeline                    |
 | 6   | Resume                     | `src/routes/resume.tsx`                           | ⬜ Planned | Contact card polish                  |
 | 7   | Shared (nav/footer/header) | `SiteNav.tsx`, `SiteFooter.tsx`, `PageHeader.tsx` | ⬜ Planned | Active-link indicator, scroll reveal |
 | 8   | Theme / utilities          | `src/styles.css`                                  | ⬜ Planned | Shared animation utilities           |
@@ -67,26 +67,26 @@ with an optional marquee hero band.
 
 **Concept:** Smoother filtering + richer cards.
 
-- [ ] Filter buttons: animate the active pill (layout transition), add a count per filter.
-- [ ] Cards: fade/slide in on filter change (staggered), hover lift + border glow.
-- [ ] Carousel: add a subtle crossfade between media instead of instant swap.
+- [x] Filter buttons: animated active pill (transition), count per filter, hover border.
+- [x] Cards: staggered fade-in on filter change (remount via `key={filter}`), hover lift + border glow.
+- [x] Carousel: crossfade between media on swap (remount via `key={idx}`).
 
 ### 4. Project detail — `src/routes/projects.$slug.tsx` ⬜
 
 **Concept:** ArtStation-style polish.
 
-- [ ] Hero: fade-in on load.
-- [ ] Gallery: click-to-enlarge lightbox (or open image in new tab) + scroll reveal per block.
-- [ ] Process blocks: reveal on scroll with a stagger.
+- [x] Hero: fade-in on load.
+- [x] Gallery: click-to-enlarge lightbox (images) + scroll reveal per block.
+- [x] Process blocks: reveal on scroll with a stagger.
 - [ ] Sidebar: sticky already; add active-section highlight (optional).
 
 ### 5. Experience — `src/routes/experience.tsx` ⬜
 
 **Concept:** Animated timeline.
 
-- [ ] Timeline dots: pulse/glow; entries slide in from the left on scroll.
-- [ ] Education cards: hover lift + accent border.
-- [ ] Add a subtle connecting line draw animation (optional).
+- [x] Timeline dots: pulse/glow; entries slide in from the left on scroll.
+- [x] Education cards: hover lift + accent border.
+- [x] Connecting-line: reverted to a clean static line (scroll-draw looked janky); dots re-aligned dead-center on the line.
 
 ### 6. Resume — `src/routes/resume.tsx` ⬜
 
@@ -147,4 +147,25 @@ with an optional marquee hero band.
   - Featured Work: hover lift + image zoom + a "View project" overlay that fades in.
   - CTA: gradient shimmer sweep on the email button (`.shimmer`).
   - Added `.animate-fade-up` and `.shimmer` utilities to `styles.css`.
+  - Verified: `bun run lint` (0 errors), `bun run build` (passes).
+
+- **Projects list** — Smoother filtering + richer cards:
+  - Filter buttons: animated active pill, per-filter count badge, hover border.
+  - Cards: staggered fade-in on filter change (list remounts via `key={filter}`), hover lift + border glow.
+  - Carousel: crossfade between media on swap (media remounts via `key={idx}`).
+  - Added `.animate-fade-in` utility + `fade-in` keyframe to `styles.css`.
+  - Verified: `bun run lint` (0 errors), `bun run build` (passes).
+
+- **Project detail** — ArtStation-style polish:
+  - Hero: fade-in on load.
+  - Gallery: images are now click-to-enlarge (lightbox with backdrop blur + close button); each block reveals on scroll with a stagger.
+  - Process blocks: reveal on scroll with a stagger.
+  - Sidebar active-section highlight deferred (optional, low value).
+  - Verified: `bun run lint` (0 errors), `bun run build` (passes).
+
+- **Experience** — Animated timeline:
+  - Timeline dots: pulsing glow (`.animate-pulse-glow`); entries reveal on scroll with a stagger.
+  - Education cards: hover lift + accent border.
+  - Connecting-line: reverted the scroll-draw gradient line (looked janky) to a clean static line; dots re-aligned dead-center on the line.
+  - Added `.animate-pulse-glow` utility to `styles.css`.
   - Verified: `bun run lint` (0 errors), `bun run build` (passes).
