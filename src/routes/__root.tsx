@@ -1,6 +1,8 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
+import { CustomCursor } from "@/components/CustomCursor";
+import { ArtBackground } from "@/components/ArtBackground";
 
 import appCss from "../styles.css?url";
 
@@ -69,7 +71,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <head>
         <HeadContent />
       </head>
@@ -84,11 +86,15 @@ function RootShell({ children }: { children: React.ReactNode }) {
 function RootComponent() {
   return (
     <div className="min-h-screen flex flex-col">
-      <SiteNav />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      <SiteFooter />
+      <ArtBackground bg="constellation" />
+      <div className="relative z-10 flex min-h-screen flex-col">
+        <SiteNav />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <SiteFooter />
+      </div>
+      <CustomCursor />
     </div>
   );
 }

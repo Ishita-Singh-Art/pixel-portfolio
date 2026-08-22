@@ -32,42 +32,9 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Light pastel theme (default) */
+/* Dark pastel theme (the only theme) */
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.98 0.012 320); /* soft pastel blush */
-  --foreground: oklch(0.28 0.04 300);
-  --card: oklch(0.995 0.008 320);
-  --card-foreground: oklch(0.28 0.04 300);
-  --popover: oklch(0.995 0.008 320);
-  --popover-foreground: oklch(0.28 0.04 300);
-  --primary: oklch(0.78 0.12 340); /* pastel pink */
-  --primary-foreground: oklch(0.22 0.04 300);
-  --secondary: oklch(0.84 0.1 220); /* pastel blue */
-  --secondary-foreground: oklch(0.22 0.04 300);
-  --muted: oklch(0.95 0.018 320);
-  --muted-foreground: oklch(0.5 0.04 300);
-  --accent: oklch(0.86 0.1 160); /* pastel mint */
-  --accent-foreground: oklch(0.22 0.04 300);
-  --destructive: oklch(0.7 0.16 25);
-  --destructive-foreground: oklch(0.99 0.01 80);
-  --border: oklch(0.9 0.02 320);
-  --input: oklch(0.92 0.02 320);
-  --ring: oklch(0.78 0.12 340);
-
-  --gradient-hero: linear-gradient(
-    135deg,
-    oklch(0.85 0.1 340 / 0.9),
-    oklch(0.86 0.09 220 / 0.85),
-    oklch(0.88 0.09 160 / 0.85)
-  );
-  --gradient-fade: linear-gradient(180deg, oklch(0.98 0.012 320 / 0), oklch(0.98 0.012 320 / 0.95));
-  --shadow-glow: 0 20px 60px -20px oklch(0.78 0.12 340 / 0.45);
-  --shadow-card: 0 10px 30px -20px oklch(0.5 0.04 300 / 0.25);
-}
-
-/* Dark pastel theme */
-.dark {
   --background: oklch(0.2 0.025 300); /* deep plum */
   --foreground: oklch(0.95 0.02 320);
   --card: oklch(0.25 0.028 300);
@@ -111,6 +78,15 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
+  }
+
+  /* ── Animated art layer (rendered by <ArtBackground />) ─────────────── */
+  .art-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
   }
   h1,
   h2,
@@ -226,6 +202,50 @@
   .shimmer:hover::after {
     transform: translateX(100%);
   }
+
+  /* ── Custom cursor (paintbrush) ────────────────────────────────────── */
+  .cursor-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .cursor-brush {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    will-change: transform;
+    width: 26px;
+    height: 26px;
+    color: var(--primary);
+    filter: drop-shadow(0 0 6px var(--primary));
+    transition:
+      color 0.25s ease,
+      filter 0.25s ease;
+  }
+  .cursor-brush svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Hover — brush "dips" toward the accent color */
+  .cursor-brush[data-state="hover"] {
+    color: var(--accent);
+    filter: drop-shadow(0 0 8px var(--accent));
+  }
+}
+
+/* Hide the native cursor everywhere the custom one is active */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
 }
 
 @keyframes marquee-scroll {

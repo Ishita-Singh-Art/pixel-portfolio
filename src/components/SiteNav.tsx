@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 const links = [
   { to: "/", label: "Home" },
@@ -51,11 +50,7 @@ export function SiteNav() {
             </li>
           ))}
         </ul>
-        <div className="hidden md:flex items-center">
-          <ThemeToggle />
-        </div>
         <div className="flex items-center md:hidden">
-          <ThemeToggle />
           <button
             aria-label="Toggle menu"
             className="p-2 -mr-2 text-foreground"
