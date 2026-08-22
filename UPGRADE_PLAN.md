@@ -121,10 +121,10 @@ with an optional marquee hero band.
 
 ## Verification checklist (run after every page)
 
-- [ ] `bun run lint`
-- [ ] `bun run build`
-- [ ] `bun run format`
-- [ ] Manual: light + dark, mobile collapse, `prefers-reduced-motion`, no CLS regressions.
+- [x] `bun run lint`
+- [x] `bun run build`
+- [x] `bun run format`
+- [x] Manual: light + dark, mobile collapse, `prefers-reduced-motion`, no CLS regressions.
 
 ---
 
