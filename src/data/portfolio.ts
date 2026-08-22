@@ -102,6 +102,49 @@ export const skillGroups = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// SKILL METADATA (optional sidecar — additive, non-breaking)
+//
+// `skillGroups` above stays a plain list of strings. This map adds optional
+// proficiency metadata keyed by skill name, used by the Skills page's animated
+// "stat sheet" bars. Any skill NOT listed here falls back to DEFAULT_LEVEL.
+// Add/remove entries freely — nothing else in the app depends on this shape.
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const DEFAULT_SKILL_LEVEL = 75;
+
+export type SkillMeta = { level: number; tag?: string };
+
+export const skillMeta: Record<string, SkillMeta> = {
+  // 3D Tools
+  "Autodesk Maya": { level: 90, tag: "Daily driver" },
+  ZBrush: { level: 85, tag: "Sculpting" },
+  "Substance Painter": { level: 88, tag: "Texturing" },
+  Blender: { level: 70, tag: "Blockout" },
+  "3ds Max": { level: 65, tag: "Hard-surface" },
+
+  // 2D Tools
+  "Adobe Photoshop": { level: 90, tag: "Daily driver" },
+  "Clip Studio": { level: 80, tag: "Illustration" },
+  Procreate: { level: 85, tag: "Painting" },
+  Pencil2D: { level: 60, tag: "2D animation" },
+  "Animate CC": { level: 70, tag: "2D animation" },
+
+  // Specializations
+  "3D Modeling": { level: 92, tag: "Core" },
+  Texturing: { level: 88, tag: "Core" },
+  "Digital Sculpting": { level: 85, tag: "Core" },
+  "UV Mapping": { level: 82, tag: "Pipeline" },
+  "PBR Workflows": { level: 86, tag: "Pipeline" },
+  "Asset Optimization": { level: 80, tag: "Pipeline" },
+
+  // Other
+  "Spine (2D Animation)": { level: 78, tag: "Rigging" },
+  "C++": { level: 55, tag: "Scripting" },
+  Python: { level: 60, tag: "Scripting" },
+  "Visual Studio": { level: 70, tag: "Tooling" },
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // PROJECTS — MEDIA FORMATS
 //
 //   IMAGE (LOCAL — the recommended approach. Place the file in /public/images/):

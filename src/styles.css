@@ -140,4 +140,132 @@
     background-clip: text;
     color: transparent;
   }
+
+  /* ── Skill stat-sheet ─────────────────────────────────────────────── */
+  .skill-bar-fill {
+    background-image: var(--gradient-hero);
+    transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .ghost-icon {
+    opacity: 0.06;
+    transform: rotate(-8deg);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+  .skill-card-hover {
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  .skill-card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+  }
+  .skill-card-hover:hover .ghost-icon {
+    opacity: 0.12;
+    transform: rotate(0deg) scale(1.05);
+  }
+
+  /* ── Marquee ──────────────────────────────────────────────────────── */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll var(--marquee-duration, 30s) linear infinite;
+  }
+  .marquee-track--reverse {
+    animation-direction: reverse;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* ── Reveal on scroll ─────────────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Entrance (above-the-fold, plays on load) ──────────────────────── */
+  .animate-fade-up {
+    animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* ── Shimmer (CTA hover) ───────────────────────────────────────────── */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, oklch(1 0 0 / 0.25) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+  .shimmer:hover::after {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: var(--shadow-glow);
+  }
+  50% {
+    box-shadow: 0 20px 60px -20px oklch(0.78 0.12 340 / 0.7);
+  }
+}
+
+/* Respect reduced motion — freeze all animation */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .marquee-track--reverse {
+    animation: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .skill-bar-fill {
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

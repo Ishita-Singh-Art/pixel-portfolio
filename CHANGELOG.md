@@ -5,6 +5,7 @@ All notable changes to the Pixel Portfolio project.
 ## [Unreleased] — 2026-08-21
 
 ### Added
+
 - **`OptimizedImage` component** (`src/components/OptimizedImage.tsx`) — Drop-in `<img>` replacement that enforces modern performance hints:
   - `loading="lazy"` by default (opt out with `eager` for above-fold/LCP images)
   - `decoding="async"` so image decode never blocks the main thread
@@ -19,6 +20,7 @@ All notable changes to the Pixel Portfolio project.
 - **Drive image preconnect** — Added `preconnect` + `dns-prefetch` for `drive.google.com` and `lh3.googleusercontent.com` in `__root.tsx`, cutting DNS+TLS+TCP cost from ~300–800ms to ~50ms on first paint.
 
 ### Changed
+
 - **`MediaRenderer` now uses `OptimizedImage` / `LazyIframe`** — Images route through `OptimizedImage` (with a muted background color to prevent CLS while thumbnails stream in), and framable videos route through `LazyIframe` (lazy-mounted via IntersectionObserver). Added a `fetchPriority` prop.
 - **Home page hero** — Switched to `OptimizedImage` with `loading="eager"`, `fetchPriority="high"`, and `skipLazyMount` (it's the LCP image).
 - **Featured Work cards** — First card's thumbnail is eager + high priority; the rest stay lazy. Added explicit `width`/`height` (1280×720) to prevent CLS. Video iframes now set `loading="lazy"`.
@@ -29,20 +31,24 @@ All notable changes to the Pixel Portfolio project.
 ## [Unreleased] — 2026-08-15
 
 ### Added
+
 - **Featured Work thumbnails on the landing page** — Each featured card now shows a media preview (image or video) above the title/description. Cards fall back to text-only when a project has no embeddable media.
 - **`featured` flag on projects** — Added an optional `featured?: boolean` field to the `Project` type in `src/data/portfolio.ts`. The landing page's "Featured Work" section now renders `projects.filter((p) => p.featured)` instead of the first 3 projects, so you control exactly which projects appear (and how many). Works for both 3D and 2D projects. The existing three projects (Radio, Chair, Tank) were marked `featured: true` to preserve current behavior.
 
 ### Fixed
+
 - **Featured Work video not rendering** — The card only looked for an `image` in `media`, so video-only projects (e.g. the 2D cat) showed nothing. It now falls back to a `video` and renders it in an iframe, while still skipping unframeable Drive URLs (`embeddedfolderview` / `accounts.google.com`).
 - **Video player controls clipped in Featured Work** — Google Drive's `/preview` player renders the 16:9 video plus a control bar below it, so a strict 16:9 frame buried the progress bar/controls into the description. Video frames now use a 4:3 aspect ratio (matching Drive's native 640×480 embed) so the full player fits. Images keep 16:9.
 - **`MediaRenderer` video frame ratio** — The shared renderer (used on project detail hero + gallery) had the same latent 16:9 clipping bug; its default is now 4:3, and it now honors the `className` prop (e.g. `max-h-[70vh]`) instead of ignoring it.
 
 ### Changed
+
 - **Featured Work card layout** — Media container is now `relative` with `absolute inset-0` media, matching the projects-list carousel pattern so images/videos fill their frame consistently.
 
 ## [Unreleased] — 2026-08-13
 
 ### Added
+
 - **ArtStation-style project detail pages** — Each project now has its own dedicated page at `/projects/:slug` with:
   - Full-width hero media (image or video)
   - Metadata bar (category badge + tool pills)
@@ -55,6 +61,7 @@ All notable changes to the Pixel Portfolio project.
 - **`projects.index.tsx`** — Project list page extracted from the layout route
 
 ### Fixed
+
 - **Google Drive thumbnail URL typo** — "Old School Signal" had `=w1920` instead of `&sz=w1920`, causing a broken image
 - **CSP `frame-ancestors` error** — Two projects used `embeddedfolderview` URLs as `type: "video"` media; Google blocks folder embeds on external sites. `MediaRenderer` now detects these and shows a fallback card with a direct Drive link
 - **Video iframe "thin strip"** — `MediaRenderer` was wrapping videos in a container with `aspectRatio: "16/9"` which forced a fixed ratio even when the parent was already sized. Videos now use `absolute inset-0 w-full h-full` to fill the container
@@ -62,6 +69,7 @@ All notable changes to the Pixel Portfolio project.
 - **Gray bars below carousel images** — `aspect-video` forced a fixed 16:9 ratio while the text column was taller. Changed to `items-stretch` on the grid with `absolute inset-0 object-cover` on images so they fill the full row height
 
 ### Changed
+
 - **Projects list page** — Project titles now link to detail pages; added "View Details" button; text truncated with `line-clamp` to keep cards compact
 - **Home page featured projects** — Now link to `/projects/$slug` instead of `/projects`
 - **Carousel video rendering** — Inlined `<iframe>` directly in the carousel instead of going through `MediaRenderer` to avoid the fixed aspect-ratio wrapper
@@ -69,22 +77,26 @@ All notable changes to the Pixel Portfolio project.
 ## [Unreleased] — 2026-08-02
 
 ### Fixed
+
 - **Missing `vite/client` type definitions** — `node_modules` was absent; ran `npm install` to restore all dependencies and resolve the TypeScript error.
 - **CORS blocking Google Drive images** — Switched from `uc?export=view&id=FILE_ID` to `thumbnail?id=FILE_ID&sz=w1920`. The thumbnail endpoint sets `Access-Control-Allow-Origin: *`; the old endpoint does not.
 - **Images cropped in carousel** — Changed `object-cover` to `object-contain` on the `<img>` tag in `ProjectCard` so artwork displays fully without cropping.
 - **CRLF line endings** — Ran `prettier --write` across the entire codebase to normalize Windows line endings, fixing 5466 lint errors.
 
 ### Changed
+
 - **"2D Illustrations & Canvas Paintings" project** — Replaced the Google Drive folder iframe embed with 4 individual image entries using the thumbnail endpoint, creating a browsable carousel.
 - **"2D Cat Character — Spine Animation" project** — Replaced the Drive folder embed with the actual video preview (`/file/d/FILE_ID/preview`).
 - **`portfolio.ts` documentation** — Updated the media format comments to document the correct thumbnail URL pattern and CORS caveat.
 
 ### Added
+
 - **CHANGELOG.md** — This file.
 
 ## [Unreleased] — 2026-05-12
 
 ### Added
+
 - **Initial portfolio site build** — Built out the full site from the TanStack Start template:
   - `SiteNav`, `SiteFooter`, and `PageHeader` shared layout components
   - Pages: Home (`index.tsx`), Projects (`projects.tsx`), Skills (`skills.tsx`), Experience (`experience.tsx`), Resume (`resume.tsx`)
@@ -95,12 +107,15 @@ All notable changes to the Pixel Portfolio project.
 - **Theme toggle** — Added `ThemeToggle` component and dark/light theme support in `SiteNav` and `styles.css`.
 
 ### Changed
+
 - **Hero theme** — Switched the hero image to a pastel theme.
 - **Experience locations** — Updated the location for all experience entries to "Raipur, Chhattisgarh, India".
 - **Wrangler worker name** — Renamed the Cloudflare worker from `tanstack-start-app` to `ishita-singh-portfolio` (later adjusted to `ishita-singh-` for the Pages deployment).
 
 ### Fixed
+
 - **Dark mode toggle** — Fixed the dark mode toggle behavior.
 
 ### Deployment
+
 - **Cloudflare Pages deployment** — Merged PR #2 (`Pages_Deployment` branch) to deploy the site to Cloudflare Pages, including `package-lock.json` and `wrangler.jsonc` updates.
