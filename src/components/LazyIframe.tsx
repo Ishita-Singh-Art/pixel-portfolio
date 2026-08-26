@@ -34,6 +34,8 @@ export function LazyIframe({
         loading={eager ? "eager" : "lazy"}
         allow="autoplay; encrypted-media; fullscreen"
         allowFullScreen
+        sandbox="allow-scripts allow-same-origin allow-presentation"
+        referrerPolicy="strict-origin-when-cross-origin"
       />
     </div>
   );
