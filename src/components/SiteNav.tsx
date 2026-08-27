@@ -29,7 +29,7 @@ export function SiteNav() {
     >
       <nav className="mx-auto max-w-6xl px-5 sm:px-8 h-16 flex items-center justify-between">
         <Link to="/" className="font-display text-lg font-semibold tracking-tight">
-          Ishita<span className="text-primary">.</span>
+          Ishita<span className="text-primary">.art</span>
         </Link>
         <ul className="hidden md:flex items-center gap-1">
           {links.map((l) => (
